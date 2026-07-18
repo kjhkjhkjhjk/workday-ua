@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
+    <div class="scroll-progress" aria-hidden="true"></div>
     <div class="page-glow page-glow--one"></div>
     <div class="page-glow page-glow--two"></div>
 
@@ -37,7 +38,7 @@
           <div class="eyebrow"><span class="status-dot"></span> Открыта к новым идеям</div>
           <p class="hero-kicker">Привет, я</p>
           <h1>Анна<span class="accent-dot">.</span></h1>
-          <h2>Фронтенд-разработчик</h2>
+          <h2 class="hero-headline" aria-label="Фронтенд-разработчик">Фронтенд-разработчик</h2>
           <p class="hero-text">Собираю живые интерфейсы, экспериментирую с кодом и превращаю идеи в сайты, которыми хочется пользоваться.</p>
           <div class="hero-actions">
             <a class="button button--primary" href="#проекты">Смотреть проекты <span>↗</span></a>
@@ -160,6 +161,8 @@
     </main>
 
     <footer class="footer container"><a class="logo" href="#главная">а<span>.</span></a><p>Сделано с любопытством и ✦</p><p>© 2026 Анна</p></footer>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
     <script src="script.js"></script>
   </body>
 </html>
