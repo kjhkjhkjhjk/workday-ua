@@ -5,8 +5,9 @@ const deviceMemory = Number(navigator.deviceMemory || 8);
 const hardwareConcurrency = Number(navigator.hardwareConcurrency || 8);
 const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
 const smallScreen = window.matchMedia('(max-width: 720px)').matches;
-const lowEndSignals = hardwareConcurrency <= 4 || deviceMemory <= 4 || coarsePointer || smallScreen;
-const veryLowEnd = hardwareConcurrency <= 2 || deviceMemory <= 2 || (coarsePointer && smallScreen);
+const mobileLike = coarsePointer || smallScreen;
+const lowEndSignals = mobileLike && (hardwareConcurrency <= 4 || deviceMemory <= 4);
+const veryLowEnd = mobileLike && (hardwareConcurrency <= 2 || deviceMemory <= 2);
 let performanceTier = lowEndSignals ? 'low' : 'high';
 const setPerformanceTier = (tier) => {
   performanceTier = tier;
@@ -91,7 +92,7 @@ const runFrameProbe = () => {
       requestAnimationFrame(sample);
       return;
     }
-    if (frames / ((now - startedAt) / 1000) < 42) setPerformanceTier('low');
+    if (mobileLike && frames / ((now - startedAt) / 1000) < 30) setPerformanceTier('low');
   };
   requestAnimationFrame(sample);
 };
