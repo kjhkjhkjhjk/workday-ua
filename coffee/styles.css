@@ -306,8 +306,8 @@ model-viewer { --poster-color: transparent; display: block; background-color: tr
 .light-rays { position: absolute; z-index: 1; width: 50px; height: 29px; left: -1px; top: 2px; fill: none; stroke: #ffe8a2; stroke-linecap: round; stroke-width: 1.8; opacity: .9; transition: opacity .35s ease, transform .55s ease; transform-origin: 16px 16px; animation: rays-pulse 2.6s ease-in-out infinite; }
 .clouds { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .clouds path { transition: opacity .35s ease, fill .35s ease; }
-.cloud-light { fill: rgba(255,255,255,.85); animation: cloud-drift 7s ease-in-out infinite; }
-.cloud-dark { fill: rgba(42,72,103,.48); opacity: 0; animation: cloud-drift 8s 1s ease-in-out infinite; }
+.cloud-light { fill: rgba(255,255,255,.85); animation: cloud-drift 11s ease-in-out infinite; }
+.cloud-dark { fill: rgba(42,72,103,.48); opacity: 0; animation: cloud-drift 13s 1s ease-in-out infinite; }
 .stars { position: absolute; z-index: 3; inset: 0; color: #fff; opacity: 0; transition: opacity .35s ease; }
 .stars i { position: absolute; font: normal 10px/1 var(--font); }
 .stars i:nth-child(1) { top: 7px; left: 9px; animation: star-twinkle 1.8s ease-in-out infinite; }
