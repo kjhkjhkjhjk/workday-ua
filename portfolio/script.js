@@ -22,13 +22,47 @@ document.querySelectorAll('.nav-menu a').forEach((link) => {
 const headline = document.querySelector('.hero-headline');
 if (headline) {
   const text = headline.textContent.trim();
-  headline.textContent = '';
-  [...text].forEach((character, index) => {
-    const span = document.createElement('span');
-    span.className = 'headline-char';
-    span.style.setProperty('--char-index', index);
-    span.textContent = character === ' ' ? '\u00a0' : character;
-    headline.append(span);
+  headline.setAttribute('aria-label', text);
+  let characterIndex = 0;
+  const appendWord = (fragment, word) => {
+    const parts = word.split('-');
+    parts.forEach((part, partIndex) => {
+      if (part) {
+        const wordWrapper = document.createElement('span');
+        wordWrapper.className = 'headline-word';
+        [...part].forEach((character) => {
+          const span = document.createElement('span');
+          span.className = 'headline-char';
+          span.style.setProperty('--char-index', characterIndex);
+          span.textContent = character;
+          characterIndex += 1;
+          wordWrapper.append(span);
+        });
+        fragment.append(wordWrapper);
+      }
+      if (partIndex < parts.length - 1) {
+        fragment.append(document.createTextNode('-'));
+      }
+    });
+  };
+  const splitTextNode = (node) => {
+    const fragment = document.createDocumentFragment();
+    node.textContent.split(/(\s+)/).forEach((part) => {
+      if (/^\s+$/.test(part)) {
+        fragment.append(document.createTextNode(part));
+      } else if (part) {
+        appendWord(fragment, part);
+      }
+    });
+    node.replaceWith(fragment);
+  };
+  [...headline.childNodes].forEach((node) => {
+    if (node.nodeType === Node.TEXT_NODE) splitTextNode(node);
+    else if (node.nodeType === Node.ELEMENT_NODE) {
+      [...node.childNodes].forEach((child) => {
+        if (child.nodeType === Node.TEXT_NODE) splitTextNode(child);
+      });
+    }
   });
 }
 

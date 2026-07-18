@@ -1,3 +1,7 @@
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+const root = document.documentElement;
+
 const menuToggle = document.querySelector('.menu-toggle');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -15,17 +19,234 @@ document.querySelectorAll('.nav-menu a').forEach((link) => {
   });
 });
 
-const revealItems = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('is-visible');
-      observer.unobserve(entry.target);
+const headline = document.querySelector('.hero-headline');
+if (headline) {
+  const headlineText = headline.textContent.trim();
+  headline.setAttribute('aria-label', headlineText);
+  let characterIndex = 0;
+  const appendWord = (fragment, word) => {
+    const parts = word.split('-');
+    parts.forEach((part, partIndex) => {
+      if (part) {
+        const wordWrapper = document.createElement('span');
+        wordWrapper.className = 'headline-word';
+        [...part].forEach((character) => {
+          const span = document.createElement('span');
+          span.className = 'headline-char';
+          span.style.setProperty('--char-index', characterIndex);
+          span.textContent = character;
+          characterIndex += 1;
+          wordWrapper.append(span);
+        });
+        fragment.append(wordWrapper);
+      }
+      if (partIndex < parts.length - 1) {
+        fragment.append(document.createTextNode('-'));
+      }
+    });
+  };
+  const splitTextNode = (node) => {
+    const fragment = document.createDocumentFragment();
+    node.textContent.split(/(\s+)/).forEach((part) => {
+      if (/^\s+$/.test(part)) {
+        fragment.append(document.createTextNode(part));
+      } else if (part) {
+        appendWord(fragment, part);
+      }
+    });
+    node.replaceWith(fragment);
+  };
+  [...headline.childNodes].forEach((node) => {
+    if (node.nodeType === Node.TEXT_NODE) splitTextNode(node);
+    else if (node.nodeType === Node.ELEMENT_NODE) {
+      [...node.childNodes].forEach((child) => {
+        if (child.nodeType === Node.TEXT_NODE) splitTextNode(child);
+      });
     }
   });
-}, { threshold: 0.12 });
+}
 
-revealItems.forEach((item) => revealObserver.observe(item));
+const revealItems = [...document.querySelectorAll('.reveal')];
+const revealGroups = new Map();
+revealItems.forEach((item) => {
+  const group = item.closest('section') || document.body;
+  const index = revealGroups.get(group) || 0;
+  item.style.setProperty('--reveal-delay', `${Math.min(index * 65, 325)}ms`);
+  revealGroups.set(group, index + 1);
+});
+
+if (prefersReducedMotion.matches) {
+  revealItems.forEach((item) => item.classList.add('is-visible'));
+} else if ('IntersectionObserver' in window) {
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+  revealItems.forEach((item) => revealObserver.observe(item));
+} else {
+  revealItems.forEach((item) => item.classList.add('is-visible'));
+}
+
+const progressBar = document.querySelector('.scroll-progress');
+let progressFrame = 0;
+const updateScrollProgress = () => {
+  progressFrame = 0;
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+  root.style.setProperty('--scroll-progress', progress);
+  if (progressBar) progressBar.style.transform = `scaleX(${progress})`;
+};
+window.addEventListener('scroll', () => {
+  if (!progressFrame) progressFrame = requestAnimationFrame(updateScrollProgress);
+}, { passive: true });
+updateScrollProgress();
+
+const motionElements = {
+  cursor: null,
+  ring: null,
+  heroVisual: document.querySelector('.hero-visual'),
+  beans: [...document.querySelectorAll('.hero-bean')],
+  magnetic: [],
+  tilt: [],
+};
+let motionFrame = 0;
+let pointerX = window.innerWidth / 2;
+let pointerY = window.innerHeight / 2;
+let pointerInside = false;
+let scrollOffset = window.scrollY;
+
+const lerp = (current, target, amount) => current + (target - current) * amount;
+const requestMotionFrame = () => {
+  if (!motionFrame) motionFrame = requestAnimationFrame(renderMotion);
+};
+
+const renderMotion = () => {
+  motionFrame = 0;
+  let moving = false;
+
+  if (motionElements.cursor) {
+    const dot = motionElements.cursor;
+    const ring = motionElements.ring;
+    dot.x = lerp(dot.x, pointerX, 0.82);
+    dot.y = lerp(dot.y, pointerY, 0.82);
+    ring.x = lerp(ring.x, pointerX, 0.18);
+    ring.y = lerp(ring.y, pointerY, 0.18);
+    dot.node.style.transform = `translate3d(${dot.x}px, ${dot.y}px, 0) translate3d(-50%, -50%, 0)`;
+    ring.node.style.transform = `translate3d(${ring.x}px, ${ring.y}px, 0) translate3d(-50%, -50%, 0)`;
+    moving = Math.abs(pointerX - ring.x) > 0.1 || Math.abs(pointerY - ring.y) > 0.1;
+  }
+
+  motionElements.magnetic.forEach((item) => {
+    item.x = lerp(item.x, item.targetX, 0.16);
+    item.y = lerp(item.y, item.targetY, 0.16);
+    item.node.style.setProperty('--mag-x', `${item.x}px`);
+    item.node.style.setProperty('--mag-y', `${item.y}px`);
+    moving = moving || Math.abs(item.targetX - item.x) > 0.1 || Math.abs(item.targetY - item.y) > 0.1;
+  });
+
+  motionElements.tilt.forEach((item) => {
+    item.x = lerp(item.x, item.targetX, 0.13);
+    item.y = lerp(item.y, item.targetY, 0.13);
+    item.node.style.setProperty('--tilt-x', `${item.x}deg`);
+    item.node.style.setProperty('--tilt-y', `${item.y}deg`);
+    moving = moving || Math.abs(item.targetX - item.x) > 0.1 || Math.abs(item.targetY - item.y) > 0.1;
+  });
+
+  if (motionElements.heroVisual && pointerInside) {
+    const targetX = (pointerX / window.innerWidth - 0.5) * 14;
+    const targetY = (pointerY / window.innerHeight - 0.5) * -12 + scrollOffset * -0.018;
+    const currentX = parseFloat(motionElements.heroVisual.dataset.parallaxX || '0');
+    const currentY = parseFloat(motionElements.heroVisual.dataset.parallaxY || '0');
+    const nextX = lerp(currentX, targetX, 0.08);
+    const nextY = lerp(currentY, targetY, 0.08);
+    motionElements.heroVisual.dataset.parallaxX = nextX;
+    motionElements.heroVisual.dataset.parallaxY = nextY;
+    motionElements.heroVisual.style.setProperty('--parallax-x', `${nextX}px`);
+    motionElements.heroVisual.style.setProperty('--parallax-y', `${nextY}px`);
+    motionElements.beans.forEach((bean, index) => {
+      const depth = index ? -0.7 : 0.85;
+      bean.style.setProperty('--bean-x', `${nextX * depth}px`);
+      bean.style.setProperty('--bean-y', `${nextY * depth}px`);
+    });
+    moving = moving || Math.abs(targetX - nextX) > 0.1 || Math.abs(targetY - nextY) > 0.1;
+  }
+
+  if (moving) requestMotionFrame();
+};
+
+const resetMotion = () => {
+  motionElements.magnetic.forEach((item) => {
+    item.targetX = 0;
+    item.targetY = 0;
+  });
+  motionElements.tilt.forEach((item) => {
+    item.targetX = 0;
+    item.targetY = 0;
+  });
+  requestMotionFrame();
+};
+
+if (!prefersReducedMotion.matches && finePointer.matches) {
+  document.body.classList.add('has-custom-cursor');
+  motionElements.cursor = { node: document.querySelector('.cursor-dot'), x: pointerX, y: pointerY };
+  motionElements.ring = { node: document.querySelector('.cursor-ring'), x: pointerX, y: pointerY };
+
+  window.addEventListener('pointermove', (event) => {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    pointerInside = true;
+    requestMotionFrame();
+  }, { passive: true });
+  window.addEventListener('pointerleave', () => { pointerInside = false; }, { passive: true });
+
+  document.querySelectorAll('a, button, .menu-card, .benefit-card, .review-card').forEach((target) => {
+    target.addEventListener('pointerenter', () => document.body.classList.add('cursor-hover'), { passive: true });
+    target.addEventListener('pointerleave', () => document.body.classList.remove('cursor-hover'), { passive: true });
+  });
+
+  document.querySelectorAll('.button--dark, .button--light').forEach((button) => {
+    const item = { node: button, x: 0, y: 0, targetX: 0, targetY: 0 };
+    motionElements.magnetic.push(item);
+    button.classList.add('magnetic-button');
+    button.addEventListener('pointermove', (event) => {
+      const bounds = button.getBoundingClientRect();
+      item.targetX = (event.clientX - (bounds.left + bounds.width / 2)) * 0.16;
+      item.targetY = (event.clientY - (bounds.top + bounds.height / 2)) * 0.16;
+      requestMotionFrame();
+    }, { passive: true });
+    button.addEventListener('pointerleave', resetMotion, { passive: true });
+  });
+
+  document.querySelectorAll('.menu-card, .benefit-card, .review-card').forEach((card) => {
+    const item = { node: card, x: 0, y: 0, targetX: 0, targetY: 0 };
+    motionElements.tilt.push(item);
+    card.classList.add('tilt-card');
+    card.addEventListener('pointermove', (event) => {
+      const bounds = card.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+      const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+      item.targetX = y * -6;
+      item.targetY = x * 6;
+      card.style.setProperty('--tilt-scale', '1.015');
+      requestMotionFrame();
+    }, { passive: true });
+    card.addEventListener('pointerleave', () => {
+      item.targetX = 0;
+      item.targetY = 0;
+      card.style.setProperty('--tilt-scale', '1');
+      requestMotionFrame();
+    }, { passive: true });
+  });
+
+  window.addEventListener('scroll', () => {
+    scrollOffset = window.scrollY;
+    if (motionElements.heroVisual && pointerInside) requestMotionFrame();
+  }, { passive: true });
+}
 
 const modal = document.querySelector('#booking-modal');
 const openButtons = document.querySelectorAll('[data-modal-open]');

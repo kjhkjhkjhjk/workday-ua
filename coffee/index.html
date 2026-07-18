@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
+    <div class="scroll-progress" aria-hidden="true"></div>
     <header class="site-header">
       <nav class="nav container" aria-label="Основная навигация">
         <a class="logo" href="#главная" aria-label="Кофейня Зерно, на главную"><span class="logo-mark">☕</span> зерно</a>
@@ -32,7 +33,7 @@
       <section class="hero container" id="главная">
         <div class="hero-copy reveal">
           <p class="eyebrow"><span></span> Кофейня по соседству</p>
-          <h1>Кофе, который<br><em>хочется повторить.</em></h1>
+          <h1 class="hero-headline">Кофе, который<br><em>хочется повторить.</em></h1>
           <p class="hero-text">Завариваем любимые зёрна, печём тёплую выпечку и создаём место, куда приятно возвращаться каждый день.</p>
           <div class="hero-actions">
             <a class="button button--dark" href="#меню">Посмотреть меню <span>↓</span></a>
@@ -122,6 +123,8 @@
         <form class="booking-form"><label for="booking-name">Ваше имя</label><input id="booking-name" type="text" placeholder="Как к вам обращаться?" required><label for="booking-date">Дата и время</label><input id="booking-date" type="datetime-local" required><label for="booking-guests">Количество гостей</label><select id="booking-guests"><option>1 гость</option><option>2 гостя</option><option>3 гостя</option><option>4 гостя</option><option>5 и больше</option></select><button class="button button--dark" type="submit">Отправить запрос <span>↗</span></button><p class="booking-success" role="status">Готово! Мы свяжемся с вами для подтверждения ✦</p></form>
       </div>
     </div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
     <script src="script.js"></script>
   </body>
 </html>
