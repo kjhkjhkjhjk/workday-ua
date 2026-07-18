@@ -21,6 +21,14 @@ const releasePreloader = () => {
 if (document.readyState === 'complete') releasePreloader();
 else window.addEventListener('load', releasePreloader, { once: true });
 
+const modelViewers = [...document.querySelectorAll('model-viewer')];
+modelViewers.forEach((viewer) => {
+  viewer.addEventListener('load', () => {
+    viewer.closest('.dish-art, .hero-cup-scene')?.classList.add('model-ready');
+  }, { once: true });
+  if (prefersReducedMotion.matches) viewer.removeAttribute('auto-rotate');
+});
+
 const menuToggle = document.querySelector('.menu-toggle');
 const navMenu = document.querySelector('.nav-menu');
 
