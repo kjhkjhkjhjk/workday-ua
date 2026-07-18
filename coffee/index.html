@@ -6,6 +6,14 @@
     <meta name="description" content="Зерно — уютная городская кофейня со свежей выпечкой, авторским кофе и тёплой атмосферой.">
     <meta name="theme-color" content="#f8f1e7">
     <title>Зерно — кофе, выпечка и свои люди</title>
+    <script>
+      (() => {
+        let saved = null;
+        try { saved = localStorage.getItem('zerno-theme'); } catch {}
+        const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
@@ -31,6 +39,17 @@
           <a href="#меню">Меню</a>
           <a href="#почему-мы">Почему мы</a>
           <a href="#контакты">Контакты</a>
+          <label class="theme-switch" for="theme-toggle">
+            <input id="theme-toggle" type="checkbox" aria-label="Включить тёмную тему">
+            <span class="slider">
+              <span class="sun-moon">
+                <svg class="moon-dots" viewBox="0 0 26 26" aria-hidden="true"><circle cx="8" cy="7" r="1.1"></circle><circle cx="16.5" cy="11" r=".8"></circle><circle cx="10.5" cy="17" r=".7"></circle></svg>
+              </span>
+              <svg class="light-rays" viewBox="0 0 60 34" aria-hidden="true"><path d="M8 17h-5M13 8 9.5 4.5M26 5V1M39 8l3.5-3.5M44 17h5"></path></svg>
+              <svg class="clouds" viewBox="0 0 60 34" aria-hidden="true"><path class="cloud-light" d="M7 24h26a5 5 0 0 0 0-10 8 8 0 0 0-15-2 6 6 0 0 0-11 5 3.5 3.5 0 0 0 0 7Z"></path><path class="cloud-dark" d="M31 28h20a4 4 0 0 0 0-8 7 7 0 0 0-13-2 5 5 0 0 0-9 4 3 3 0 0 0 2 6Z"></path></svg>
+              <span class="stars" aria-hidden="true"><i>✦</i><i>·</i><i>✧</i><i>·</i></span>
+            </span>
+          </label>
           <button class="nav-booking" type="button" data-modal-open>Забронировать столик <span>↗</span></button>
         </div>
       </nav>

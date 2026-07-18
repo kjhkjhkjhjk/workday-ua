@@ -29,6 +29,22 @@ modelViewers.forEach((viewer) => {
   if (prefersReducedMotion.matches) viewer.removeAttribute('auto-rotate');
 });
 
+const themeToggle = document.querySelector('#theme-toggle');
+const themeMeta = document.querySelector('meta[name="theme-color"]');
+const setTheme = (theme, persist = true) => {
+  root.dataset.theme = theme;
+  if (themeToggle) themeToggle.checked = theme === 'dark';
+  if (themeMeta) themeMeta.setAttribute('content', theme === 'dark' ? '#1a120e' : '#f8f1e7');
+  if (persist) {
+    try { localStorage.setItem('zerno-theme', theme); } catch {}
+  }
+};
+setTheme(root.dataset.theme || 'light', false);
+requestAnimationFrame(() => root.classList.add('theme-ready'));
+themeToggle?.addEventListener('change', () => {
+  setTheme(themeToggle.checked ? 'dark' : 'light');
+});
+
 const menuToggle = document.querySelector('.menu-toggle');
 const navMenu = document.querySelector('.nav-menu');
 
