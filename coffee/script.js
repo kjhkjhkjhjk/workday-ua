@@ -91,6 +91,54 @@ if (prefersReducedMotion.matches) {
   revealItems.forEach((item) => item.classList.add('is-visible'));
 }
 
+const counterItems = [...document.querySelectorAll('.counter-value')];
+const setCounter = (item, value) => {
+  item.textContent = `${value}${item.dataset.suffix || ''}`;
+};
+const animateCounter = (item) => {
+  if (item.dataset.counted) return;
+  item.dataset.counted = 'true';
+  const target = Number(item.dataset.count);
+  const startedAt = performance.now();
+  const duration = 1200;
+  const tick = (now) => {
+    const progress = Math.min((now - startedAt) / duration, 1);
+    const eased = 1 - ((1 - progress) ** 3);
+    setCounter(item, Math.round(target * eased));
+    if (progress < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+};
+if (prefersReducedMotion.matches) {
+  counterItems.forEach((item) => setCounter(item, Number(item.dataset.count)));
+} else if ('IntersectionObserver' in window) {
+  const counterObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.7 });
+  counterItems.forEach((item) => counterObserver.observe(item));
+} else {
+  counterItems.forEach((item) => setCounter(item, Number(item.dataset.count)));
+}
+
+const sectionLinks = [...document.querySelectorAll('.nav-menu a[href^="#"]:not(.nav-pill)')];
+const sectionsForNav = sectionLinks
+  .map((link) => document.querySelector(link.getAttribute('href')))
+  .filter(Boolean);
+if ('IntersectionObserver' in window) {
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      sectionLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === `#${entry.target.id}`));
+    });
+  }, { rootMargin: '-42% 0px -48% 0px', threshold: 0 });
+  sectionsForNav.forEach((section) => navObserver.observe(section));
+}
+
 const progressBar = document.querySelector('.scroll-progress');
 let progressFrame = 0;
 const updateScrollProgress = () => {
@@ -246,6 +294,12 @@ if (!prefersReducedMotion.matches && finePointer.matches) {
     scrollOffset = window.scrollY;
     if (motionElements.heroVisual && pointerInside) requestMotionFrame();
   }, { passive: true });
+}
+
+if (!prefersReducedMotion.matches) {
+  window.setTimeout(() => {
+    document.querySelector('.coffee-cup')?.classList.add('cup-bobbing');
+  }, 1450);
 }
 
 const modal = document.querySelector('#booking-modal');
