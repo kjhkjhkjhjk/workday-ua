@@ -176,9 +176,11 @@ const motionElements = {
   cursor: null,
   ring: null,
   heroVisual: document.querySelector('.hero-visual'),
+  heroCupScene: document.querySelector('.hero-cup-scene'),
   beans: [...document.querySelectorAll('.hero-bean')],
   magnetic: [],
   tilt: [],
+  productScenes: [],
 };
 let motionFrame = 0;
 let pointerX = window.innerWidth / 2;
@@ -223,6 +225,33 @@ const renderMotion = () => {
     moving = moving || Math.abs(item.targetX - item.x) > 0.1 || Math.abs(item.targetY - item.y) > 0.1;
   });
 
+  motionElements.productScenes.forEach((item) => {
+    item.x = lerp(item.x, item.targetX, 0.14);
+    item.y = lerp(item.y, item.targetY, 0.14);
+    item.z = lerp(item.z, item.targetZ, 0.16);
+    item.node.style.setProperty('--scene-x', `${item.x}deg`);
+    item.node.style.setProperty('--scene-y', `${item.y}deg`);
+    item.node.style.setProperty('--product-z', `${item.z}px`);
+    moving = moving
+      || Math.abs(item.targetX - item.x) > 0.1
+      || Math.abs(item.targetY - item.y) > 0.1
+      || Math.abs(item.targetZ - item.z) > 0.1;
+  });
+
+  if (motionElements.heroCupScene && pointerInside) {
+    const targetX = (pointerY / window.innerHeight - 0.5) * -18;
+    const targetY = (pointerX / window.innerWidth - 0.5) * 20;
+    const currentX = parseFloat(motionElements.heroCupScene.dataset.rotateX || '0');
+    const currentY = parseFloat(motionElements.heroCupScene.dataset.rotateY || '0');
+    const nextX = lerp(currentX, targetX, 0.1);
+    const nextY = lerp(currentY, targetY, 0.1);
+    motionElements.heroCupScene.dataset.rotateX = nextX;
+    motionElements.heroCupScene.dataset.rotateY = nextY;
+    motionElements.heroCupScene.style.setProperty('--scene-x', `${nextX}deg`);
+    motionElements.heroCupScene.style.setProperty('--scene-y', `${nextY}deg`);
+    moving = moving || Math.abs(targetX - nextX) > 0.1 || Math.abs(targetY - nextY) > 0.1;
+  }
+
   if (motionElements.heroVisual && pointerInside) {
     const targetX = (pointerX / window.innerWidth - 0.5) * 14;
     const targetY = (pointerY / window.innerHeight - 0.5) * -12 + scrollOffset * -0.018;
@@ -253,6 +282,12 @@ const resetMotion = () => {
   motionElements.tilt.forEach((item) => {
     item.targetX = 0;
     item.targetY = 0;
+  });
+  motionElements.productScenes.forEach((item) => {
+    item.targetX = 0;
+    item.targetY = 0;
+    item.targetZ = 32;
+    item.node.classList.remove('product-scene-hover');
   });
   requestMotionFrame();
 };
@@ -305,6 +340,28 @@ if (!prefersReducedMotion.matches && finePointer.matches) {
       item.targetX = 0;
       item.targetY = 0;
       card.style.setProperty('--tilt-scale', '1');
+      requestMotionFrame();
+    }, { passive: true });
+  });
+
+  document.querySelectorAll('.dish-art').forEach((scene) => {
+    const item = { node: scene, x: 0, y: 0, z: 32, targetX: 0, targetY: 0, targetZ: 32 };
+    motionElements.productScenes.push(item);
+    scene.addEventListener('pointermove', (event) => {
+      const bounds = scene.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+      const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+      item.targetX = y * -20;
+      item.targetY = x * 20;
+      item.targetZ = 56;
+      scene.classList.add('product-scene-hover');
+      requestMotionFrame();
+    }, { passive: true });
+    scene.addEventListener('pointerleave', () => {
+      item.targetX = 0;
+      item.targetY = 0;
+      item.targetZ = 32;
+      scene.classList.remove('product-scene-hover');
       requestMotionFrame();
     }, { passive: true });
   });

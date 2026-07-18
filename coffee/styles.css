@@ -241,3 +241,40 @@ body.preloader-active .hero-visual.is-visible .hero-bean--two { animation-play-s
   .preloader .loader, .loader .text > span, .loader .line::after { animation: none; }
   .preloader.is-hidden .loader { animation: none; }
 }
+
+/* The product visuals have their own depth layer; cards keep their existing tilt. */
+.dish-art { --scene-x: 0deg; --scene-y: 0deg; --product-z: 32px; --product-scale: 1; --shadow-scale: 1; --shadow-opacity: .28; perspective: 850px; transform: perspective(850px) rotateX(var(--scene-x)) rotateY(var(--scene-y)); transform-style: preserve-3d; transition: transform .18s ease-out; will-change: transform; overflow: visible; }
+.dish-art::before { z-index: 0; background: radial-gradient(ellipse at center, rgba(255,250,242,.34), rgba(108,69,54,.12) 63%, transparent 66%); box-shadow: 0 20px 18px rgba(67,35,26,.22); transform: translateZ(-18px) scale(.92); }
+.dish-art::after { z-index: 1; transform: translateZ(2px); }
+.dish-product { position: relative; z-index: 3; display: grid; width: 132px; height: 112px; place-items: center; transform: translate3d(0, 0, var(--product-z)) scale(var(--product-scale)); transform-style: preserve-3d; filter: drop-shadow(0 16px 6px rgba(65,31,22,var(--shadow-opacity))); animation: dish-product-idle 4.2s ease-in-out infinite; transition: filter .28s ease; will-change: transform, filter; }
+.dish-product::after { content: ""; position: absolute; z-index: -1; left: 14%; bottom: 2px; width: 72%; height: 15px; border-radius: 50%; background: rgba(53,26,19,.3); filter: blur(9px); opacity: var(--shadow-opacity); transform: translateZ(-36px) scaleX(var(--shadow-scale)); transition: transform .35s ease, opacity .35s ease, filter .35s ease; }
+.dish-emoji { position: relative; z-index: 2; display: block; font-size: 74px; transform: translateZ(22px); transform-style: preserve-3d; }
+.dish-art--filter .dish-emoji { font-size: 84px; }
+.dish-art i { transform: translateZ(24px); transition: transform .3s ease; }
+.dish-art.product-scene-hover { --product-scale: 1.12; --shadow-scale: 1.45; --shadow-opacity: .5; }
+.dish-art.product-scene-hover .dish-product { filter: drop-shadow(0 25px 10px rgba(65,31,22,.34)); }
+.dish-art.product-scene-hover i { transform: translateZ(38px) scale(1.3); }
+.hero-cup-scene { position: absolute; inset: 0; --scene-x: 0deg; --scene-y: 0deg; perspective: 1000px; transform: rotateX(var(--scene-x)) rotateY(var(--scene-y)); transform-style: preserve-3d; will-change: transform; }
+.coffee-cup { transform-style: preserve-3d; transform: translateZ(24px) rotate(-8deg); }
+.cup-coffee { transform: translateZ(19px); }
+.cup-rim { position: absolute; z-index: 2; width: 170px; height: 53px; top: -21px; left: 18px; border: 5px solid rgba(226,157,116,.7); border-radius: 50%; box-shadow: inset 0 -8px 0 rgba(64,32,25,.35); transform: translateZ(27px); }
+.cup-highlight { transform: translateZ(32px) rotate(13deg); }
+.cup-handle { transform: translateZ(8px) rotate(-7deg); }
+.cup-shadow { transform: translateZ(-28px); transition: transform .4s ease, opacity .4s ease; }
+.steam { transform: translate3d(0, 0, 50px) rotate(18deg); transform-style: preserve-3d; }
+.steam--one { --steam-z: 48px; }.steam--two { --steam-z: 56px; }.steam--three { --steam-z: 42px; }
+.hero-bean { transform-style: preserve-3d; }
+.hero-bean--one { --bean-z: 34px; }.hero-bean--two { --bean-z: 8px; }
+@keyframes dish-product-idle { 0%, 100% { transform: translate3d(0, 2px, var(--product-z)) scale(var(--product-scale)) rotateZ(-1deg); } 50% { transform: translate3d(0, -7px, var(--product-z)) scale(var(--product-scale)) rotateZ(1.5deg); } }
+@keyframes cup-enter { from { opacity: 0; transform: translate3d(85px, 35px, 0) scale(.62) rotate(-20deg); } to { opacity: 1; transform: translate3d(0, 0, 24px) scale(1) rotate(-8deg); } }
+@keyframes cup-handle-enter { from { opacity: 0; transform: translate3d(65px, 20px, 0) rotate(-18deg); } to { opacity: 1; transform: translate3d(0, 0, 8px) rotate(-7deg); } }
+@keyframes cup-bob { 0%, 100% { transform: translate3d(0, 0, 24px) rotate(-8deg); } 50% { transform: translate3d(0, -12px, 24px) rotate(-5deg); } }
+@keyframes steam-rise { 0%, 100% { opacity: .12; transform: translate3d(0, 12px, var(--steam-z, 42px)) scaleX(.75) rotate(18deg); } 45% { opacity: .65; transform: translate3d(-8px, -20px, var(--steam-z, 42px)) scaleX(1.3) rotate(7deg); } 75% { opacity: .25; transform: translate3d(8px, -42px, var(--steam-z, 42px)) scaleX(.9) rotate(25deg); } }
+@keyframes bean-float-one { 0%, 100% { transform: translate3d(var(--bean-x), var(--bean-y), var(--bean-z)) rotate(-30deg); } 50% { transform: translate3d(calc(var(--bean-x) - 9px), calc(var(--bean-y) - 22px), var(--bean-z)) rotate(-15deg); } }
+@keyframes bean-float-two { 0%, 100% { transform: translate3d(var(--bean-x), var(--bean-y), var(--bean-z)) rotate(23deg); } 50% { transform: translate3d(calc(var(--bean-x) + 11px), calc(var(--bean-y) - 18px), var(--bean-z)) rotate(38deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .dish-art { transform: none; transition: none; }
+  .dish-product { animation: none; transform: translateZ(32px); transition: none; }
+  .dish-product::after, .dish-art i { transition: none; }
+  .hero-cup-scene { transform: none; }
+}
