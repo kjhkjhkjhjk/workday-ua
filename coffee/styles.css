@@ -203,3 +203,41 @@ h1 em, h2 em { color: var(--rust); font-style: italic; font-weight: 500; }
   .section-kicker.reveal:not(.is-visible), .reveal:not(.section-kicker):not(.tilt-card):not(.hero-copy):not(.hero-visual):not(.is-visible) { transform: none; }
   .button::after { display: none; }
 }
+
+body.preloader-active { overflow: hidden; }
+.preloader { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; background: #291913; color: var(--cream); opacity: 1; transform: scale(1); transition: opacity .65s ease, transform .65s cubic-bezier(.22, 1, .36, 1), visibility .65s; }
+.preloader.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; transform: scale(1.045); }
+.loader { --main-size: 4em; --text-color: #f8f1e7; --shine-color: #e7bd8c; --shadow-color: #7e4935; width: min(80vw, 290px); color: var(--text-color); font-family: var(--serif); }
+.loader .text { display: flex; align-items: center; justify-content: center; height: calc(var(--main-size) * 1.1); overflow: visible; font-size: var(--main-size); font-weight: 700; letter-spacing: -.1em; line-height: 1; text-align: center; }
+.loader .text > span { display: inline-block; min-width: .58em; color: var(--text-color); background: linear-gradient(110deg, var(--text-color) 18%, var(--shine-color) 46%, var(--text-color) 68%, var(--shadow-color) 88%, var(--text-color) 100%); background-size: 260% 100%; background-position: -98% 0; background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 1px rgba(248, 241, 231, .3); animation: loader-letter-wave 2.3s ease-in-out infinite, loader-shadow 2.7s linear infinite; }
+.loader .text > span:nth-child(1) { font-size: 1.08em; margin-top: -.05em; }
+.loader .text > span:nth-child(2) { font-size: 1em; margin-top: .03em; }
+.loader .text > span:nth-child(3) { font-size: 1.08em; margin-top: -.03em; }
+.loader .text > span:nth-child(4) { font-size: .98em; margin-top: .05em; }
+.loader .text > span:nth-child(5) { font-size: 1.05em; margin-top: -.02em; }
+.loader .text > span:nth-child(2) { animation-delay: -.22s, -.4s; }
+.loader .text > span:nth-child(3) { animation-delay: -.4s, -.8s; }
+.loader .text > span:nth-child(4) { animation-delay: -.58s, -1.2s; }
+.loader .text > span:nth-child(5) { animation-delay: -.76s, -1.6s; }
+.loader .line { position: relative; width: 82%; height: 2px; margin: .78em auto 0; overflow: hidden; background: rgba(248, 241, 231, .18); }
+.loader .line::after { content: ""; position: absolute; inset: 0 auto 0 -35%; width: 42%; background: var(--shine-color); box-shadow: 0 0 13px var(--shine-color); animation: loader-wobble 1.45s ease-in-out infinite; }
+.preloader.is-hidden .loader { animation: loader-exit .5s ease both; }
+body.preloader-active .hero-copy.is-visible .eyebrow,
+body.preloader-active .hero-copy.is-visible .hero-headline .headline-char,
+body.preloader-active .hero-copy.is-visible .hero-text,
+body.preloader-active .hero-copy.is-visible .hero-actions,
+body.preloader-active .hero-visual.is-visible .coffee-cup,
+body.preloader-active .hero-visual.is-visible .cup-handle,
+body.preloader-active .hero-visual.is-visible .steam,
+body.preloader-active .hero-visual.is-visible .hero-bean--one,
+body.preloader-active .hero-visual.is-visible .hero-bean--two { animation-play-state: paused; }
+@keyframes loader-wobble { 0%, 100% { transform: translate3d(-90%, 0, 0); } 50% { transform: translate3d(210%, 0, 0); } }
+@keyframes loader-letter-wave { 0%, 100% { transform: translate3d(0, 2px, 0) rotate(-1deg); } 50% { transform: translate3d(0, -2px, 0) rotate(1deg); } }
+@keyframes loader-scrolling { from { transform: translate3d(-100%, 0, 0); } to { transform: translate3d(100%, 0, 0); } }
+@keyframes loader-shadow { from { background-position: -98% 0; } to { background-position: 102% 0; } }
+@keyframes loader-exit { to { opacity: 0; transform: scale(.86) translate3d(0, -12px, 0); } }
+@media (prefers-reduced-motion: reduce) {
+  .preloader { transition: none; }
+  .preloader .loader, .loader .text > span, .loader .line::after { animation: none; }
+  .preloader.is-hidden .loader { animation: none; }
+}

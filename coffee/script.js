@@ -1,6 +1,25 @@
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
 const root = document.documentElement;
+const preloader = document.querySelector('#preloader');
+const preloaderStartedAt = performance.now();
+const preloaderMinDisplay = prefersReducedMotion.matches ? 0 : 1450;
+
+const releasePreloader = () => {
+  if (!preloader || preloader.dataset.released) return;
+  preloader.dataset.released = 'true';
+  const wait = Math.max(0, preloaderMinDisplay - (performance.now() - preloaderStartedAt));
+  window.setTimeout(() => {
+    preloader.classList.add('is-hidden');
+    window.setTimeout(() => {
+      document.body.classList.remove('preloader-active');
+      window.dispatchEvent(new CustomEvent('preloader:ready'));
+    }, prefersReducedMotion.matches ? 0 : 650);
+  }, wait);
+};
+
+if (document.readyState === 'complete') releasePreloader();
+else window.addEventListener('load', releasePreloader, { once: true });
 
 const menuToggle = document.querySelector('.menu-toggle');
 const navMenu = document.querySelector('.nav-menu');
@@ -297,9 +316,9 @@ if (!prefersReducedMotion.matches && finePointer.matches) {
 }
 
 if (!prefersReducedMotion.matches) {
-  window.setTimeout(() => {
+  window.addEventListener('preloader:ready', () => {
     document.querySelector('.coffee-cup')?.classList.add('cup-bobbing');
-  }, 1450);
+  }, { once: true });
 }
 
 const modal = document.querySelector('#booking-modal');

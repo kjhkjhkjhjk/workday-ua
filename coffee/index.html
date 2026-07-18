@@ -11,7 +11,13 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
   </head>
-  <body>
+  <body class="preloader-active">
+    <div class="preloader" id="preloader" role="status" aria-label="Загрузка кофейни">
+      <div class="loader" aria-hidden="true">
+        <div class="text" aria-label="ЗЕРНО"><span>З</span><span>Е</span><span>Р</span><span>Н</span><span>О</span></div>
+        <div class="line"></div>
+      </div>
+    </div>
     <div class="scroll-progress" aria-hidden="true"></div>
     <header class="site-header">
       <nav class="nav container" aria-label="Основная навигация">
