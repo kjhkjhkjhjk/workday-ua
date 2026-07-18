@@ -306,8 +306,8 @@ model-viewer { --poster-color: transparent; display: block; background-color: tr
 .light-rays { position: absolute; z-index: 1; width: 50px; height: 29px; left: -1px; top: 2px; fill: none; stroke: #ffe8a2; stroke-linecap: round; stroke-width: 1.8; opacity: .9; transition: opacity .35s ease, transform .55s ease; transform-origin: 16px 16px; animation: rays-pulse 2.6s ease-in-out infinite; }
 .clouds { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .clouds path { transition: opacity .35s ease, fill .35s ease; }
-.cloud-light { fill: rgba(255,255,255,.85); animation: cloud-drift 7s linear infinite; }
-.cloud-dark { fill: rgba(42,72,103,.48); opacity: 0; animation: cloud-drift 9s 1s linear infinite; }
+.cloud-light { fill: rgba(255,255,255,.85); animation: cloud-drift 6s ease-in-out infinite; }
+.cloud-dark { fill: rgba(42,72,103,.48); opacity: 0; animation: cloud-drift 6s 1s ease-in-out infinite; }
 .stars { position: absolute; z-index: 3; inset: 0; color: #fff; opacity: 0; transition: opacity .35s ease; }
 .stars i { position: absolute; font: normal 10px/1 var(--font); }
 .stars i:nth-child(1) { top: 7px; left: 9px; animation: star-twinkle 1.8s ease-in-out infinite; }
@@ -322,7 +322,7 @@ model-viewer { --poster-color: transparent; display: block; background-color: tr
 .theme-switch input:checked + .slider .cloud-light { opacity: 0; }
 .theme-switch input:checked + .slider .cloud-dark { opacity: 0; }
 .theme-switch input:checked + .slider .stars { opacity: 1; }
-@keyframes cloud-drift { 0% { transform: translateX(-26px); } 55% { transform: translateX(14px); } 100% { transform: translateX(-26px); } }
+@keyframes cloud-drift { 0%, 100% { transform: translateX(0); } 40% { transform: translateX(4px); } 80% { transform: translateX(-4px); } }
 @keyframes sun-glow { 0%, 100% { box-shadow: 0 2px 5px rgba(83,54,25,.25), 0 0 3px 1px rgba(255,215,109,.5); } 50% { box-shadow: 0 2px 5px rgba(83,54,25,.25), 0 0 12px 5px rgba(255,215,109,.95); } }
 @keyframes rays-pulse { 0%, 100% { opacity: .4; transform: rotate(-8deg) scale(.94); } 50% { opacity: 1; transform: rotate(14deg) scale(1.12); } }
 @keyframes star-twinkle { 0%, 100% { opacity: .3; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.3); } }
