@@ -410,8 +410,4 @@ html.performance-low .hero-visual.is-visible .hero-bean--two,
 html.performance-low .announcement-track p,
 html.performance-low .quote-mark { animation: none; }
 html.performance-low .dish-product { animation: none; }
-html.performance-low .theme-switch .sun-moon,
-html.performance-low .theme-switch .light-rays,
-html.performance-low .theme-switch .cloud-light,
-html.performance-low .theme-switch .cloud-dark,
-html.performance-low .theme-switch .stars i { animation: none; }
+
