@@ -1,6 +1,20 @@
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
 const root = document.documentElement;
+const deviceMemory = Number(navigator.deviceMemory || 8);
+const hardwareConcurrency = Number(navigator.hardwareConcurrency || 8);
+const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+const smallScreen = window.matchMedia('(max-width: 720px)').matches;
+const lowEndSignals = hardwareConcurrency <= 4 || deviceMemory <= 4 || coarsePointer || smallScreen;
+const veryLowEnd = hardwareConcurrency <= 2 || deviceMemory <= 2 || (coarsePointer && smallScreen);
+let performanceTier = lowEndSignals ? 'low' : 'high';
+const setPerformanceTier = (tier) => {
+  performanceTier = tier;
+  root.dataset.performance = tier;
+  root.classList.toggle('performance-low', tier === 'low');
+  if (tier === 'low') document.body?.classList.remove('has-custom-cursor', 'cursor-hover');
+};
+setPerformanceTier(performanceTier);
 const preloader = document.querySelector('#preloader');
 const preloaderStartedAt = performance.now();
 const preloaderMinDisplay = prefersReducedMotion.matches ? 0 : 1450;
@@ -23,11 +37,66 @@ else window.addEventListener('load', releasePreloader, { once: true });
 
 const modelViewers = [...document.querySelectorAll('model-viewer')];
 modelViewers.forEach((viewer) => {
+  viewer.dataset.modelSrc = viewer.getAttribute('src') || '';
   viewer.addEventListener('load', () => {
     viewer.closest('.dish-art, .hero-cup-scene')?.classList.add('model-ready');
   }, { once: true });
-  if (prefersReducedMotion.matches) viewer.removeAttribute('auto-rotate');
+  if (prefersReducedMotion.matches || performanceTier === 'low') viewer.removeAttribute('auto-rotate');
+  if (veryLowEnd && viewer.classList.contains('menu-model')) {
+    viewer.removeAttribute('src');
+    viewer.dataset.staticPoster = 'true';
+    viewer.addEventListener('click', () => {
+      if (viewer.dataset.staticPoster !== 'true') return;
+      viewer.setAttribute('src', viewer.dataset.modelSrc);
+      delete viewer.dataset.staticPoster;
+      viewer.closest('.dish-art')?.classList.remove('performance-poster');
+    }, { passive: true });
+    viewer.closest('.dish-art')?.classList.add('performance-poster');
+  }
 });
+if ('IntersectionObserver' in window && modelViewers.length) {
+  const modelObserver = new IntersectionObserver((entries) => {
+    entries.forEach(({ target, isIntersecting }) => {
+      if (target.dataset.staticPoster === 'true') return;
+      if (prefersReducedMotion.matches || performanceTier === 'low') {
+        target.removeAttribute('auto-rotate');
+      } else if (isIntersecting) {
+        target.setAttribute('auto-rotate', '');
+      } else {
+        target.removeAttribute('auto-rotate');
+      }
+    });
+  }, { rootMargin: '180px 0px', threshold: 0.01 });
+  modelViewers.forEach((viewer) => modelObserver.observe(viewer));
+}
+document.addEventListener('visibilitychange', () => {
+  root.classList.toggle('page-hidden', document.hidden);
+});
+if ('IntersectionObserver' in window) {
+  const sectionMotionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(({ target, isIntersecting }) => {
+      target.classList.toggle('is-offscreen', !isIntersecting);
+    });
+  }, { rootMargin: '120px 0px', threshold: 0 });
+  document.querySelectorAll('main > section').forEach((section) => sectionMotionObserver.observe(section));
+}
+
+const runFrameProbe = () => {
+  if (prefersReducedMotion.matches || performanceTier === 'low') return;
+  const startedAt = performance.now();
+  let frames = 0;
+  const sample = (now) => {
+    frames += 1;
+    if (now - startedAt < 900) {
+      requestAnimationFrame(sample);
+      return;
+    }
+    if (frames / ((now - startedAt) / 1000) < 42) setPerformanceTier('low');
+  };
+  requestAnimationFrame(sample);
+};
+const idle = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 350));
+idle(runFrameProbe);
 
 const themeToggle = document.querySelector('#theme-toggle');
 const themeMeta = document.querySelector('meta[name="theme-color"]');
@@ -219,6 +288,7 @@ const requestMotionFrame = () => {
 
 const renderMotion = () => {
   motionFrame = 0;
+  if (performanceTier === 'low') return;
   let moving = false;
 
   if (motionElements.cursor) {
@@ -316,7 +386,7 @@ const resetMotion = () => {
   requestMotionFrame();
 };
 
-if (!prefersReducedMotion.matches && finePointer.matches) {
+if (!prefersReducedMotion.matches && finePointer.matches && performanceTier === 'high') {
   document.body.classList.add('has-custom-cursor');
   motionElements.cursor = { node: document.querySelector('.cursor-dot'), x: pointerX, y: pointerY };
   motionElements.ring = { node: document.querySelector('.cursor-ring'), x: pointerX, y: pointerY };

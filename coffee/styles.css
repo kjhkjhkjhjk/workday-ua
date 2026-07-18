@@ -107,19 +107,19 @@ h1 em, h2 em { color: var(--rust); font-style: italic; font-weight: 500; }
 .hero-headline { overflow: hidden; }
 .hero-headline .headline-word { display: inline-block; white-space: nowrap; }
 .hero-headline .headline-char { display: inline-block; opacity: 0; transform: translate3d(0, 1.1em, 0) rotate(3deg); animation: coffee-headline-rise .75s cubic-bezier(.22, 1, .36, 1) forwards; animation-delay: calc(var(--char-index) * 32ms + 220ms); }
-.reveal { transition-delay: var(--reveal-delay, 0ms); will-change: transform, opacity; }
-.menu-card, .benefit-card, .review-card { --tilt-x: 0deg; --tilt-y: 0deg; --tilt-scale: 1; transition: transform .55s cubic-bezier(.2, .7, .2, 1), box-shadow .55s ease; will-change: transform; }
+.reveal { transition-delay: var(--reveal-delay, 0ms); }
+.menu-card, .benefit-card, .review-card { --tilt-x: 0deg; --tilt-y: 0deg; --tilt-scale: 1; transition: transform .55s cubic-bezier(.2, .7, .2, 1), box-shadow .55s ease; }
 .reveal.tilt-card:not(.is-visible) { transform: translate3d(0, 22px, 0); }
 .reveal.tilt-card.is-visible { transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) scale3d(var(--tilt-scale), var(--tilt-scale), var(--tilt-scale)); }
-.hero .hero-visual { --parallax-x: 0px; --parallax-y: 0px; transform: translate3d(var(--parallax-x), var(--parallax-y), 0); will-change: transform; }
-.hero-bean { --bean-x: 0px; --bean-y: 0px; will-change: transform; }
+.hero .hero-visual { --parallax-x: 0px; --parallax-y: 0px; transform: translate3d(var(--parallax-x), var(--parallax-y), 0); }
+.hero-bean { --bean-x: 0px; --bean-y: 0px; }
 .hero-bean--one { transform: translate3d(var(--bean-x), var(--bean-y), 0) rotate(-30deg); }
 .hero-bean--two { transform: translate3d(var(--bean-x), var(--bean-y), 0) rotate(23deg); }
 .magnetic-button { --mag-x: 0px; --mag-y: 0px; }
 .button.magnetic-button { transform: translate3d(var(--mag-x), var(--mag-y), 0); }
 .button.magnetic-button:hover { transform: translate3d(var(--mag-x), var(--mag-y), 0) translateY(-3px); }
 .menu-section .menu-grid, .reviews-grid { perspective: 900px; }
-.announcement-inner { will-change: transform; }
+.announcement-inner { overflow: hidden; }
 @keyframes coffee-headline-rise { to { opacity: 1; transform: translate3d(0, 0, 0) rotate(0); } }
 
 @media (hover: hover) and (pointer: fine) {
@@ -243,10 +243,10 @@ body.preloader-active .hero-visual.is-visible .hero-bean--two { animation-play-s
 }
 
 /* The product visuals have their own depth layer; cards keep their existing tilt. */
-.dish-art { --scene-x: 0deg; --scene-y: 0deg; --product-z: 32px; --product-scale: 1; --shadow-scale: 1; --shadow-opacity: .28; perspective: 850px; transform: perspective(850px) rotateX(var(--scene-x)) rotateY(var(--scene-y)); transform-style: preserve-3d; transition: transform .18s ease-out; will-change: transform; overflow: visible; }
+.dish-art { --scene-x: 0deg; --scene-y: 0deg; --product-z: 32px; --product-scale: 1; --shadow-scale: 1; --shadow-opacity: .28; perspective: 850px; transform: perspective(850px) rotateX(var(--scene-x)) rotateY(var(--scene-y)); transform-style: preserve-3d; transition: transform .18s ease-out; overflow: hidden; }
 .dish-art::before { z-index: 0; background: radial-gradient(ellipse at center, rgba(255,250,242,.34), rgba(108,69,54,.12) 63%, transparent 66%); box-shadow: 0 20px 18px rgba(67,35,26,.22); transform: translateZ(-18px) scale(.92); }
 .dish-art::after { z-index: 1; transform: translateZ(2px); }
-.dish-product { position: relative; z-index: 3; display: grid; width: 132px; height: 112px; place-items: center; transform: translate3d(0, 0, var(--product-z)) scale(var(--product-scale)); transform-style: preserve-3d; filter: drop-shadow(0 16px 6px rgba(65,31,22,var(--shadow-opacity))); animation: dish-product-idle 4.2s ease-in-out infinite; transition: filter .28s ease; will-change: transform, filter; }
+.dish-product { position: relative; z-index: 3; display: grid; width: 132px; height: 112px; place-items: center; transform: translate3d(0, 0, var(--product-z)) scale(var(--product-scale)); transform-style: preserve-3d; filter: drop-shadow(0 16px 6px rgba(65,31,22,var(--shadow-opacity))); animation: dish-product-idle 4.2s ease-in-out infinite; transition: filter .28s ease; }
 .dish-product::after { content: ""; position: absolute; z-index: -1; left: 14%; bottom: 2px; width: 72%; height: 15px; border-radius: 50%; background: rgba(53,26,19,.3); filter: blur(9px); opacity: var(--shadow-opacity); transform: translateZ(-36px) scaleX(var(--shadow-scale)); transition: transform .35s ease, opacity .35s ease, filter .35s ease; }
 .dish-emoji { position: relative; z-index: 2; display: block; font-size: 74px; transform: translateZ(22px); transform-style: preserve-3d; }
 .dish-art--filter .dish-emoji { font-size: 84px; }
@@ -254,7 +254,7 @@ body.preloader-active .hero-visual.is-visible .hero-bean--two { animation-play-s
 .dish-art.product-scene-hover { --product-scale: 1.12; --shadow-scale: 1.45; --shadow-opacity: .5; }
 .dish-art.product-scene-hover .dish-product { filter: drop-shadow(0 25px 10px rgba(65,31,22,.34)); }
 .dish-art.product-scene-hover i { transform: translateZ(38px) scale(1.3); }
-.hero-cup-scene { position: absolute; inset: 0; --scene-x: 0deg; --scene-y: 0deg; perspective: 1000px; transform: rotateX(var(--scene-x)) rotateY(var(--scene-y)); transform-style: preserve-3d; will-change: transform; }
+.hero-cup-scene { position: absolute; inset: 0; --scene-x: 0deg; --scene-y: 0deg; perspective: 1000px; transform: rotateX(var(--scene-x)) rotateY(var(--scene-y)); transform-style: preserve-3d; }
 .coffee-cup { transform-style: preserve-3d; transform: translateZ(24px) rotate(-8deg); }
 .cup-coffee { transform: translateZ(19px); }
 .cup-rim { position: absolute; z-index: 2; width: 170px; height: 53px; top: -21px; left: 18px; border: 5px solid rgba(226,157,116,.7); border-radius: 50%; box-shadow: inset 0 -8px 0 rgba(64,32,25,.35); transform: translateZ(27px); }
@@ -280,7 +280,7 @@ body.preloader-active .hero-visual.is-visible .hero-bean--two { animation-play-s
 }
 
 model-viewer { --poster-color: transparent; display: block; background-color: transparent; }
-.menu-model { position: relative; z-index: 3; width: 100%; height: 200px; transform: translateZ(28px); }
+.menu-model { position: relative; z-index: 3; width: 100%; height: 100%; min-height: 0; transform: none; overflow: hidden; border-radius: inherit; }
 .model-fallback { position: absolute; z-index: 2; left: 50%; top: 50%; color: rgba(255,250,242,.9); font-size: 74px; opacity: 1; transform: translate(-50%, -50%); transition: opacity .35s ease; }
 .dish-art--filter .model-fallback { font-size: 84px; }
 .dish-art.model-ready .model-fallback { opacity: 0; }
@@ -379,3 +379,39 @@ html.theme-ready .map-placeholder { transition: background-color .4s ease, color
 @media (prefers-reduced-motion: reduce) {
   .theme-switch .slider, .sun-moon, .moon-dots, .light-rays, .clouds path, .stars { transition: none; animation: none; }
 }
+
+main > .menu-section,
+main > .benefits-section,
+main > .reviews-section,
+main > .contact-section { content-visibility: auto; contain-intrinsic-size: 720px; }
+html.page-hidden * { animation-play-state: paused !important; }
+main > section.is-offscreen * { animation-play-state: paused !important; }
+.performance-poster { cursor: pointer; }
+html.performance-low .reveal { transition: opacity .32s ease; }
+html.performance-low .reveal:not(.is-visible) { transform: none !important; }
+html.performance-low .reveal.is-visible,
+html.performance-low .reveal.tilt-card.is-visible,
+html.performance-low .review-card.reveal.tilt-card.is-visible { transform: none !important; }
+html.performance-low .hero-headline .headline-char { opacity: 1; transform: none; animation: none; }
+html.performance-low .hero .hero-visual,
+html.performance-low .hero-bean,
+html.performance-low .dish-art,
+html.performance-low .menu-card,
+html.performance-low .benefit-card,
+html.performance-low .review-card { will-change: auto; }
+html.performance-low .hero-copy.is-visible .eyebrow,
+html.performance-low .hero-copy.is-visible .hero-text,
+html.performance-low .hero-copy.is-visible .hero-actions,
+html.performance-low .hero-visual.is-visible .coffee-cup,
+html.performance-low .hero-visual.is-visible .cup-handle,
+html.performance-low .hero-visual.is-visible .steam,
+html.performance-low .hero-visual.is-visible .hero-bean--one,
+html.performance-low .hero-visual.is-visible .hero-bean--two,
+html.performance-low .announcement-track p,
+html.performance-low .quote-mark { animation: none; }
+html.performance-low .dish-product { animation: none; }
+html.performance-low .theme-switch .sun-moon,
+html.performance-low .theme-switch .light-rays,
+html.performance-low .theme-switch .cloud-light,
+html.performance-low .theme-switch .cloud-dark,
+html.performance-low .theme-switch .stars i { animation: none; }
