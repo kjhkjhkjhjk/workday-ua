@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Зерно — уютная городская кофейня со свежей выпечкой, авторским кофе и тёплой атмосферой.">
+    <meta name="theme-color" content="#f8f1e7">
+    <title>Зерно — кофе, выпечка и свои люди</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav container" aria-label="Основная навигация">
+        <a class="logo" href="#главная" aria-label="Кофейня Зерно, на главную"><span class="logo-mark">☕</span> зерно</a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Открыть меню">
+          <span></span><span></span>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+          <a href="#о-нас">О нас</a>
+          <a href="#меню">Меню</a>
+          <a href="#почему-мы">Почему мы</a>
+          <a href="#контакты">Контакты</a>
+          <button class="nav-booking" type="button" data-modal-open>Забронировать столик <span>↗</span></button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero container" id="главная">
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span></span> Кофейня по соседству</p>
+          <h1>Кофе, который<br><em>хочется повторить.</em></h1>
+          <p class="hero-text">Завариваем любимые зёрна, печём тёплую выпечку и создаём место, куда приятно возвращаться каждый день.</p>
+          <div class="hero-actions">
+            <a class="button button--dark" href="#меню">Посмотреть меню <span>↓</span></a>
+            <a class="hero-note" href="#о-нас"><span class="note-icon">✦</span><span><strong>Больше, чем кофе</strong><small>Наш маленький ритуал</small></span></a>
+          </div>
+        </div>
+        <div class="hero-visual reveal reveal--delay" aria-label="Иллюстрация чашки кофе и кофейных зёрен">
+          <div class="sun-shape"></div>
+          <div class="hero-bean hero-bean--one">●</div>
+          <div class="hero-bean hero-bean--two">●</div>
+          <div class="cup-shadow"></div>
+          <div class="coffee-cup"><div class="cup-coffee"></div><div class="cup-highlight"></div></div>
+          <div class="cup-handle"></div>
+          <div class="visual-caption"><span>свежая<br>обжарка</span><b>01</b></div>
+          <span class="steam steam--one"></span><span class="steam steam--two"></span><span class="steam steam--three"></span>
+        </div>
+      </section>
+
+      <div class="announcement"><div class="container announcement-inner"><span>✳</span><p>Завтраки весь день&nbsp; · &nbsp;Выпечка из печи каждое утро&nbsp; · &nbsp;Зёрна с любовью</p><span>✳</span></div></div>
+
+      <section class="section about-section container" id="о-нас">
+        <div class="section-kicker reveal"><span>01</span><i></i><span>Наша история</span></div>
+        <div class="about-grid">
+          <div class="about-heading reveal"><p class="overline">Маленькое место<br>с большим сердцем</p><h2>Здесь день<br>начинается <em>мягче.</em></h2></div>
+          <div class="about-copy reveal reveal--delay"><p>Зерно — это кофейня для тех, кто любит не спешить. Мы открылись, чтобы у каждого в районе появилось своё уютное место: с хорошим светом, свежим кофе и знакомыми лицами за стойкой.</p><p>Мы выбираем зёрна у небольших обжарщиков, готовим всё сами и верим, что вкусный кофе — это в первую очередь про заботу.</p><a class="text-link" href="#контакты">Заглянуть в гости <span>↗</span></a></div>
+        </div>
+        <div class="about-stats reveal">
+          <div><strong>7</strong><span>дней в неделю<br>мы рядом</span></div>
+          <div><strong>12<span>+</span></strong><span>видов кофе<br>в меню</span></div>
+          <div><strong>100%</strong><span>любви к своему<br>делу</span></div>
+        </div>
+      </section>
+
+      <section class="section menu-section" id="меню">
+        <div class="container">
+          <div class="section-kicker reveal"><span>02</span><i></i><span>Меню</span></div>
+          <div class="section-top reveal"><div><p class="overline">Выбирайте по настроению</p><h2>Ваша идеальная<br><em>чашка кофе.</em></h2></div><p class="section-description">Всё готовим на месте —<br>свежо, честно и с душой.</p></div>
+          <div class="menu-grid">
+            <article class="menu-card reveal"><div class="dish-art dish-art--latte"><span class="dish-emoji">☕</span><i></i><i></i><i></i></div><div class="dish-info"><div><h3>Латте с ванилью</h3><p>Эспрессо, молоко, ваниль</p></div><strong>110 ₴</strong></div></article>
+            <article class="menu-card reveal reveal--delay"><div class="dish-art dish-art--filter"><span class="dish-emoji">◒</span><i></i><i></i><i></i></div><div class="dish-info"><div><h3>Фильтр дня</h3><p>Зёрна недели, воронка</p></div><strong>95 ₴</strong></div></article>
+            <article class="menu-card reveal reveal--delay-2"><div class="dish-art dish-art--cocoa"><span class="dish-emoji">☕</span><i></i><i></i><i></i></div><div class="dish-info"><div><h3>Какао с маршмеллоу</h3><p>Шоколад, молоко, нежность</p></div><strong>120 ₴</strong></div></article>
+            <article class="menu-card reveal"><div class="dish-art dish-art--croissant"><span class="dish-emoji">🥐</span><i></i><i></i><i></i></div><div class="dish-info"><div><h3>Круассан с миндалём</h3><p>Слоёное тесто, крем</p></div><strong>90 ₴</strong></div></article>
+            <article class="menu-card reveal reveal--delay"><div class="dish-art dish-art--cheesecake"><span class="dish-emoji">🍰</span><i></i><i></i><i></i></div><div class="dish-info"><div><h3>Чизкейк с ягодами</h3><p>Сливочный сыр, ягоды</p></div><strong>135 ₴</strong></div></article>
+            <article class="menu-card menu-card--special reveal reveal--delay-2"><div class="special-badge">Любимое</div><div class="dish-art dish-art--cinnamon"><span class="dish-emoji">🍥</span><i></i><i></i><i></i></div><div class="dish-info"><div><h3>Булочка с корицей</h3><p>Печём каждое утро</p></div><strong>85 ₴</strong></div></article>
+          </div>
+          <p class="menu-footnote">* Цены указаны в гривнах. Спросите бариста о сезонных напитках.</p>
+        </div>
+      </section>
+
+      <section class="section benefits-section container" id="почему-мы">
+        <div class="section-kicker reveal"><span>03</span><i></i><span>Почему мы</span></div>
+        <div class="benefits-grid">
+          <div class="benefits-heading reveal"><p class="overline">Причины зайти</p><h2>Задержитесь<br>у нас <em>подольше.</em></h2><p>У нас не нужно торопиться — можно просто быть собой.</p></div>
+          <article class="benefit-card reveal reveal--delay"><span class="benefit-number">01</span><div class="benefit-icon">✦</div><h3>Зёрна с характером</h3><p>Отбираем спешелти кофе у локальных обжарщиков и раскрываем его вкус в каждой чашке.</p></article>
+          <article class="benefit-card reveal reveal--delay-2"><span class="benefit-number">02</span><div class="benefit-icon">⌁</div><h3>Своя атмосфера</h3><p>Тёплый свет, музыка на фоне и столики для разговоров, работы или приятной паузы.</p></article>
+          <article class="benefit-card reveal"><span class="benefit-number">03</span><div class="benefit-icon">♡</div><h3>Знакомые лица</h3><p>Помним любимый заказ, улыбаемся первым и всегда найдём время для доброго слова.</p></article>
+        </div>
+      </section>
+
+      <section class="section reviews-section">
+        <div class="container">
+          <div class="section-kicker reveal"><span>04</span><i></i><span>Говорят гости</span></div>
+          <div class="reviews-heading reveal"><h2>Приходят за кофе,<br><em>остаются за настроением.</em></h2><span class="quote-mark">“</span></div>
+          <div class="reviews-grid">
+            <article class="review-card reveal"><div class="review-stars">★★★★★</div><p>«Самый уютный кофе в районе. Здесь каким-то образом всегда спокойно, даже когда день совсем не задался.»</p><footer><span class="avatar avatar--pink">М</span><div><strong>Марина К.</strong><small>гостья кофейни</small></div></footer></article>
+            <article class="review-card review-card--accent reveal reveal--delay"><div class="review-stars">★★★★★</div><p>«Захожу за фильтром и булочкой с корицей, а ухожу с ощущением, что всё будет хорошо. Спасибо, Зерно!»</p><footer><span class="avatar avatar--brown">А</span><div><strong>Алексей Р.</strong><small>гость кофейни</small></div></footer></article>
+            <article class="review-card reveal reveal--delay-2"><div class="review-stars">★★★★★</div><p>«Нашла своё место для работы. Розетки, быстрый Wi-Fi, вкусный кофе и очень добрые бариста.»</p><footer><span class="avatar avatar--gold">С</span><div><strong>София Л.</strong><small>гостья кофейни</small></div></footer></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact-section" id="контакты">
+        <div class="container contact-grid">
+          <div class="contact-content reveal"><div class="section-kicker"><span>05</span><i></i><span>Контакты</span></div><p class="overline">Ждём в гости</p><h2>Увидимся<br>у <em>Зерна?</em></h2><div class="contact-details"><div><span>⌖</span><p><strong>ул. Солнечная, 24</strong><small>Киев, Подол · 2 этаж</small></p></div><div><span>◷</span><p><strong>Пн–Вс · 08:00–21:00</strong><small>Кухня работает до 20:30</small></p></div><div><span>↗</span><p><strong>+380 67 123 45 67</strong><small>Звоните или пишите в мессенджер</small></p></div></div><button class="button button--light" type="button" data-modal-open>Забронировать столик <span>↗</span></button></div>
+          <div class="map-placeholder reveal reveal--delay"><div class="map-grid"></div><div class="map-road map-road--one"></div><div class="map-road map-road--two"></div><div class="map-pin">✦</div><div class="map-label">Зерно</div><span class="map-note">Мы здесь</span></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer container"><a class="logo" href="#главная"><span class="logo-mark">☕</span> зерно</a><p>Кофе, выпечка и свои люди.</p><p>© 2026 Зерно</p></footer>
+
+    <div class="modal" id="booking-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-backdrop" data-modal-close></div>
+      <div class="modal-card">
+        <button class="modal-close" type="button" data-modal-close aria-label="Закрыть окно">×</button>
+        <div class="modal-icon">☕</div><p class="overline">До встречи в Зерне</p><h2 id="modal-title">Забронировать<br><em>столик</em></h2>
+        <form class="booking-form"><label for="booking-name">Ваше имя</label><input id="booking-name" type="text" placeholder="Как к вам обращаться?" required><label for="booking-date">Дата и время</label><input id="booking-date" type="datetime-local" required><label for="booking-guests">Количество гостей</label><select id="booking-guests"><option>1 гость</option><option>2 гостя</option><option>3 гостя</option><option>4 гостя</option><option>5 и больше</option></select><button class="button button--dark" type="submit">Отправить запрос <span>↗</span></button><p class="booking-success" role="status">Готово! Мы свяжемся с вами для подтверждения ✦</p></form>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

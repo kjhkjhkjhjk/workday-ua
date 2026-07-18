@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Портфолио Анны — начинающего фронтенд-разработчика и вайбкодера.">
+    <meta name="theme-color" content="#0b0a11">
+    <title>Анна — фронтенд-разработчик</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="page-glow page-glow--one"></div>
+    <div class="page-glow page-glow--two"></div>
+
+    <header class="site-header">
+      <nav class="nav container" aria-label="Основная навигация">
+        <a class="logo" href="#главная" aria-label="На главную">а<span>.</span></a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Открыть меню">
+          <span></span><span></span>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+          <a href="#обо-мне">Обо мне</a>
+          <a href="#навыки">Навыки</a>
+          <a href="#проекты">Проекты</a>
+          <a href="#контакты">Контакты</a>
+          <a class="nav-pill" href="#контакты">Давайте знакомиться <span>↗</span></a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero container" id="главная">
+        <div class="hero-copy reveal">
+          <div class="eyebrow"><span class="status-dot"></span> Открыта к новым идеям</div>
+          <p class="hero-kicker">Привет, я</p>
+          <h1>Анна<span class="accent-dot">.</span></h1>
+          <h2>Фронтенд-разработчик</h2>
+          <p class="hero-text">Собираю живые интерфейсы, экспериментирую с кодом и превращаю идеи в сайты, которыми хочется пользоваться.</p>
+          <div class="hero-actions">
+            <a class="button button--primary" href="#проекты">Смотреть проекты <span>↗</span></a>
+            <a class="text-link" href="#обо-мне">Больше обо мне <span>↓</span></a>
+          </div>
+        </div>
+        <div class="hero-art reveal reveal--delay" aria-label="Иллюстрация рабочего пространства Анны">
+          <div class="orbit orbit--one"></div>
+          <div class="orbit orbit--two"></div>
+          <div class="art-card art-card--back"></div>
+          <div class="art-card art-card--main">
+            <div class="window-top"><i></i><i></i><i></i><span>anna.dev</span></div>
+            <div class="window-content">
+              <div class="code-line code-line--short"></div>
+              <div class="code-line code-line--long"></div>
+              <div class="code-line code-line--medium"></div>
+              <div class="code-line code-line--accent"></div>
+              <div class="code-line code-line--long"></div>
+              <div class="code-line code-line--short"></div>
+              <div class="code-cursor"></div>
+            </div>
+          </div>
+          <div class="floating-badge floating-badge--code">&lt;/&gt;</div>
+          <div class="floating-badge floating-badge--spark">✦</div>
+          <div class="hero-tag"><strong>01</strong><span>любопытство<br>к коду</span></div>
+        </div>
+      </section>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track"><span>кодирую идеи</span><b>✦</b><span>создаю впечатления</span><b>✦</b><span>учусь каждый день</span><b>✦</b><span>кодирую идеи</span><b>✦</b><span>создаю впечатления</span><b>✦</b></div>
+      </div>
+
+      <section class="section container about-section" id="обо-мне">
+        <div class="section-label reveal"><span>01</span><i></i><span>Обо мне</span></div>
+        <div class="about-grid">
+          <div class="about-title reveal">
+            <p class="overline">Немного контекста</p>
+            <h2>Создаю с интересом,<br><em>расту с каждым проектом.</em></h2>
+          </div>
+          <div class="about-copy reveal reveal--delay">
+            <p>Мне 16, и я уже несколько лет влюблена в то, как технологии могут менять ощущения от обычных вещей. Начинаю путь в веб-разработке через эксперименты, насмотренность и много практики.</p>
+            <p>Скоро поступаю в IT-колледж на направление фронтенд-разработки. А пока — вайбкодю приложения с AI, изучаю JavaScript и собираю своё портфолио из маленьких, но настоящих проектов.</p>
+            <a class="underlined-link" href="#контакты">Написать мне <span>↗</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section skills-section" id="навыки">
+        <div class="container">
+          <div class="section-label reveal"><span>02</span><i></i><span>Навыки</span></div>
+          <div class="section-heading reveal"><h2>Инструменты для<br><em>больших идей.</em></h2><p>Не боюсь гуглить, пробовать новое<br>и задавать правильные вопросы.</p></div>
+          <div class="skills-grid">
+            <article class="skill-card skill-card--large reveal">
+              <div class="skill-icon skill-icon--html">&lt;/&gt;</div>
+              <h3>HTML & CSS</h3>
+              <p>Семантичная разметка, адаптивность и аккуратные пиксели.</p>
+              <div class="skill-meter"><span style="width: 88%"></span></div><small>Продвинутый уровень</small>
+            </article>
+            <article class="skill-card reveal reveal--delay">
+              <div class="skill-icon skill-icon--js">JS</div>
+              <h3>JavaScript</h3>
+              <p>Оживляю интерфейсы и разбираюсь в логике.</p>
+              <div class="skill-meter"><span style="width: 66%"></span></div><small>Уверенный старт</small>
+            </article>
+            <article class="skill-card reveal reveal--delay-2">
+              <div class="skill-icon skill-icon--ai">✦</div>
+              <h3>Вайбкодинг с AI</h3>
+              <p>Превращаю мысли в работающие прототипы быстрее.</p>
+              <div class="skill-meter"><span style="width: 80%"></span></div><small>Мой суперскилл</small>
+            </article>
+            <article class="skill-card skill-card--wide reveal">
+              <div class="skill-icon skill-icon--tools">◌</div>
+              <div><h3>Figma & Git</h3><p>Думаю о визуале, работаю системно и сохраняю все версии.</p></div>
+              <span class="card-arrow">↗</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section projects-section container" id="проекты">
+        <div class="section-label reveal"><span>03</span><i></i><span>Избранные проекты</span></div>
+        <div class="section-heading projects-heading reveal"><h2>То, что уже<br><em>собрано руками.</em></h2><a class="underlined-link" href="#контакты">Обсудить идею <span>↗</span></a></div>
+        <div class="projects-grid">
+          <article class="project-card reveal">
+            <a class="project-visual project-visual--first" href="#" aria-label="Открыть проект Луна"><span class="project-number">01</span><span class="visual-orbit"></span><span class="visual-moon"></span><span class="visual-word">LUNA</span></a>
+            <div class="project-meta"><div><h3>Луна</h3><p>Медитативный трекер привычек</p></div><span>2026</span></div>
+            <div class="project-tags"><span>HTML</span><span>CSS</span><span>JS</span><a href="#">Демо ↗</a><a href="#">Код ↗</a></div>
+          </article>
+          <article class="project-card reveal reveal--delay">
+            <a class="project-visual project-visual--second" href="#" aria-label="Открыть проект Вкусно"><span class="project-number">02</span><span class="visual-sun"></span><span class="visual-card">вкусно<br><small>и точка</small></span></a>
+            <div class="project-meta"><div><h3>Вкусно</h3><p>Лендинг для уютного места</p></div><span>2025</span></div>
+            <div class="project-tags"><span>HTML</span><span>CSS</span><a href="#">Демо ↗</a><a href="#">Код ↗</a></div>
+          </article>
+          <article class="project-card reveal reveal--delay-2">
+            <a class="project-visual project-visual--third" href="#" aria-label="Открыть проект Фокус"><span class="project-number">03</span><span class="visual-window"><i></i><i></i><i></i><b>focus</b><em>25:00</em></span><span class="visual-stars">✦　✧</span></a>
+            <div class="project-meta"><div><h3>Фокус</h3><p>Таймер для глубокого фокуса</p></div><span>2025</span></div>
+            <div class="project-tags"><span>JS</span><span>UI</span><a href="#">Демо ↗</a><a href="#">Код ↗</a></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section contact-section" id="контакты">
+        <div class="container contact-grid">
+          <div class="contact-intro reveal">
+            <div class="section-label"><span>04</span><i></i><span>Контакты</span></div>
+            <p class="overline">Есть идея?</p>
+            <h2>Давайте сделаем<br><em>что-то классное.</em></h2>
+            <p class="contact-text">Напишите мне — обсудим проект, музыку, любимые приложения или просто познакомимся.</p>
+            <div class="contact-links"><a href="mailto:anna@example.com"><span>✉</span> anna@example.com</a><a href="#"><span>↗</span> @anna_vibe</a><a href="#"><span>◉</span> github.com/anna</a></div>
+          </div>
+          <form class="contact-form reveal reveal--delay">
+            <label for="name">Как вас зовут?</label><input id="name" name="name" type="text" placeholder="Ваше имя" required>
+            <label for="email">Ваша почта</label><input id="email" name="email" type="email" placeholder="hello@example.com" required>
+            <label for="message">Сообщение</label><textarea id="message" name="message" rows="3" placeholder="Расскажите немного об идее..." required></textarea>
+            <button class="button button--primary" type="submit">Отправить сообщение <span>↗</span></button>
+            <p class="form-success" role="status">Сообщение отправлено! Скоро отвечу ✦</p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer container"><a class="logo" href="#главная">а<span>.</span></a><p>Сделано с любопытством и ✦</p><p>© 2026 Анна</p></footer>
+    <script src="script.js"></script>
+  </body>
+</html>
