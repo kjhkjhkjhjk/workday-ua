@@ -386,28 +386,3 @@ main > .reviews-section,
 main > .contact-section { content-visibility: auto; contain-intrinsic-size: 720px; }
 html.page-hidden * { animation-play-state: paused !important; }
 main > section.is-offscreen * { animation-play-state: paused !important; }
-.performance-poster { cursor: pointer; }
-html.performance-low .reveal { transition: opacity .32s ease; }
-html.performance-low .reveal:not(.is-visible) { transform: none !important; }
-html.performance-low .reveal.is-visible,
-html.performance-low .reveal.tilt-card.is-visible,
-html.performance-low .review-card.reveal.tilt-card.is-visible { transform: none !important; }
-html.performance-low .hero-headline .headline-char { opacity: 1; transform: none; animation: none; }
-html.performance-low .hero .hero-visual,
-html.performance-low .hero-bean,
-html.performance-low .dish-art,
-html.performance-low .menu-card,
-html.performance-low .benefit-card,
-html.performance-low .review-card { will-change: auto; }
-html.performance-low .hero-copy.is-visible .eyebrow,
-html.performance-low .hero-copy.is-visible .hero-text,
-html.performance-low .hero-copy.is-visible .hero-actions,
-html.performance-low .hero-visual.is-visible .coffee-cup,
-html.performance-low .hero-visual.is-visible .cup-handle,
-html.performance-low .hero-visual.is-visible .steam,
-html.performance-low .hero-visual.is-visible .hero-bean--one,
-html.performance-low .hero-visual.is-visible .hero-bean--two,
-html.performance-low .announcement-track p,
-html.performance-low .quote-mark { animation: none; }
-html.performance-low .dish-product { animation: none; }
-
