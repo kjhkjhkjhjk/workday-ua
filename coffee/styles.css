@@ -310,17 +310,17 @@ model-viewer { --poster-color: transparent; display: block; background-color: tr
 .cloud-dark { fill: rgba(42,72,103,.48); opacity: 0; animation: cloud-move 6s .4s ease-in-out infinite reverse; }
 .stars { position: absolute; z-index: 3; inset: 0; color: #fff; opacity: 0; transition: opacity .35s ease; }
 .stars i { position: absolute; font: normal 10px/1 var(--font); }
-.stars i:nth-child(1) { top: 7px; right: 9px; animation: star-twinkle 1.8s ease-in-out infinite; }
-.stars i:nth-child(2) { top: 21px; right: 18px; font-size: 8px; animation: star-twinkle 2.3s .3s ease-in-out infinite; }
-.stars i:nth-child(3) { top: 5px; right: 24px; font-size: 7px; animation: star-twinkle 2s .7s ease-in-out infinite; }
-.stars i:nth-child(4) { top: 18px; right: 5px; font-size: 6px; animation: star-twinkle 1.5s .5s ease-in-out infinite; }
+.stars i:nth-child(1) { top: 7px; left: 9px; animation: star-twinkle 1.8s ease-in-out infinite; }
+.stars i:nth-child(2) { top: 21px; left: 18px; font-size: 8px; animation: star-twinkle 2.3s .3s ease-in-out infinite; }
+.stars i:nth-child(3) { top: 5px; left: 24px; font-size: 7px; animation: star-twinkle 2s .7s ease-in-out infinite; }
+.stars i:nth-child(4) { top: 18px; left: 5px; font-size: 6px; animation: star-twinkle 1.5s .5s ease-in-out infinite; }
 .theme-switch input:focus-visible + .slider { outline: 3px solid rgba(184,95,68,.4); outline-offset: 3px; }
 .theme-switch input:checked + .slider { background: #080c18; border-color: #363d58; box-shadow: inset 0 1px 4px rgba(0,0,0,.45); }
 .theme-switch input:checked + .slider .sun-moon { background: #f8f4e9; box-shadow: -3px 2px 0 #d7d4c7, 0 2px 6px rgba(0,0,0,.45); transform: translateX(26px) rotate(180deg); }
 .theme-switch input:checked + .slider .moon-dots { opacity: 1; }
 .theme-switch input:checked + .slider .light-rays { opacity: 0; transform: rotate(55deg) scale(.65); }
 .theme-switch input:checked + .slider .cloud-light { opacity: 0; }
-.theme-switch input:checked + .slider .cloud-dark { opacity: .7; }
+.theme-switch input:checked + .slider .cloud-dark { opacity: 0; }
 .theme-switch input:checked + .slider .stars { opacity: 1; }
 @keyframes cloud-move { 0%, 100% { transform: translateX(-3px); } 50% { transform: translateX(4px); } }
 @keyframes star-twinkle { 0%, 100% { opacity: .3; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.3); } }
